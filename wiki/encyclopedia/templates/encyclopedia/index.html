@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <h1>AllL Pages</h1>
+    <h1>All Pages</h1>
 
     <ul>
         {% for entry in entries %}
             <li>{{ entry }}</li>
         {% endfor %}
     </ul>
+
+    <h1>{{ entry }}</h1>
 
 {% endblock %}
