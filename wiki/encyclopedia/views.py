@@ -6,7 +6,8 @@ from . import util
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
+        "entries": util.list_entries(),
+        "title": "Encyclopedia"
     })
 
 def entry(request, title):
@@ -20,6 +21,3 @@ def entry(request, title):
         "entry": util.get_entry(title),
         "title": title
     })
-
-
-
