@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django import forms
 from . import util
 
+class SearchTitleForm(forms.Form):
+    title = forms.CharField()
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
-        "title": "Encyclopedia"
+        "title": "Encyclopedia",
+        "form": SearchTitleForm()
     })
 
 def entry(request, title):
@@ -21,3 +24,6 @@ def entry(request, title):
         "entry": util.get_entry(title),
         "title": title
     })
+
+def add(request):
+    return HttpResponse("hello")
