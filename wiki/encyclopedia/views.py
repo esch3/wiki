@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django import forms
 from . import util
 
@@ -17,13 +19,23 @@ def entry(request, title):
     if title.lower() not in [entry.lower() for entry in util.list_entries()]:
         return render(request, "encyclopedia/index.html", {
             "entry": str(f"{title} not found"),
-            "title": "Encyclopedia"
+            "title": "Encyclopedia",
+            "form": SearchTitleForm()
         })
 
     return render(request, "encyclopedia/index.html", {
         "entry": util.get_entry(title),
-        "title": title
+        "title": title,
+        "form": SearchTitleForm()
     })
 
 def search(request):
-    return HttpResponse("hello there")
+    form = SearchTitleForm(request.GET)
+    if form.is_valid():
+        title = form.cleaned_data["title"]
+        return entry(request, title)
+    else: 
+        return render(request, "encyclopedia/index.html", {
+            "form": SearchTitleForm()
+        })
+
