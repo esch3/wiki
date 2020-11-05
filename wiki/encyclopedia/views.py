@@ -4,7 +4,7 @@ from django import forms
 from . import util
 
 class SearchTitleForm(forms.Form):
-    title = forms.CharField()
+    title = forms.CharField(label="Search")
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -25,5 +25,5 @@ def entry(request, title):
         "title": title
     })
 
-def add(request):
-    return HttpResponse("hello")
+def search(request):
+    return HttpResponse("hello there")
