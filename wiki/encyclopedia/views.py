@@ -12,11 +12,13 @@ def index(request):
 def entry(request, title):
     if title.lower() not in [entry.lower() for entry in util.list_entries()]:
         return render(request, "encyclopedia/index.html", {
-            "entry": str(f"{title} not found")
+            "entry": str(f"{title} not found"),
+            "title": "Encyclopedia"
         })
 
     return render(request, "encyclopedia/index.html", {
-        "entry": util.get_entry(title)
+        "entry": util.get_entry(title),
+        "title": title
     })
 
 
