@@ -7,6 +7,12 @@ from . import util
 
 class SearchTitleForm(forms.Form):
     title = forms.CharField(label="Search")
+    
+def match_title(title):
+    # Returns True if a complete match
+    if title.lower() in [entry.lower() for entry in util.list_entries()]:
+        return True
+    return False
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -16,7 +22,7 @@ def index(request):
     })
 
 def entry(request, title):
-    if title.lower() not in [entry.lower() for entry in util.list_entries()]:
+    if not match_title(title):
         return render(request, "encyclopedia/index.html", {
             "entry": str(f"{title} not found"),
             "title": "Encyclopedia",
@@ -33,9 +39,20 @@ def search(request):
     form = SearchTitleForm(request.GET)
     if form.is_valid():
         title = form.cleaned_data["title"]
-        return entry(request, title)
+        matched_entries = [entry for entry in util.list_entries() if title.lower() in entry.lower()]
+        # If query string returns partial matches
+        if not match_title(title) and matched_entries: 
+            return render(request, "encyclopedia/index.html", {
+                "entries": matched_entries,
+                "title": "Encyclopedia",
+                "form": SearchTitleForm()
+            })
+        else:
+            return entry(request, title)
     else: 
         return render(request, "encyclopedia/index.html", {
-            "form": SearchTitleForm()
+            "form": SearchTitleForm(),
+            "entry": str(f"invalid input"),
+            "title": "Encyclopedia"
         })
 
