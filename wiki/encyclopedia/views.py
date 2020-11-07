@@ -7,6 +7,10 @@ from . import util
 
 class SearchTitleForm(forms.Form):
     title = forms.CharField(label="Search")
+
+class CreateNewForm(forms.Form):
+    title = forms.CharField()
+    content = forms.CharField(widget=forms.Textarea)
     
 def match_title(title):
     # Returns True if a complete match
@@ -57,4 +61,9 @@ def search(request):
         })
 
 def new(request):
-    pass
+    new_entry= CreateNewForm()
+    return render(request, "encyclopedia/index.html", {
+        "title": "Encyclopedia",
+        "form": SearchTitleForm(),
+        "new_entry_form": new_entry
+    })
