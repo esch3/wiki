@@ -9,8 +9,8 @@ class SearchTitleForm(forms.Form):
     title = forms.CharField(label="Search")
 
 class CreateNewForm(forms.Form):
-    title = forms.CharField()
-    content = forms.CharField(widget=forms.Textarea)
+    new_title = forms.CharField(label="Title: ")
+    content = forms.CharField(label="Content: ", widget=forms.Textarea)
     
 def match_title(title):
     # Returns True if a complete match
