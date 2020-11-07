@@ -56,3 +56,5 @@ def search(request):
             "title": "Encyclopedia"
         })
 
+def new(request):
+    pass
