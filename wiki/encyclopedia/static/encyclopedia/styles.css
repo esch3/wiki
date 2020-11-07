@@ -1,6 +1,7 @@
 body {
     margin: 0;
     background-color: white;
+    
 }
 
 code {
@@ -13,7 +14,7 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
+    height: 80vh;
     width: 80%;
 }
 
@@ -22,7 +23,7 @@ textarea {
 }
 
 .search {
-    /*width: 100%;*/
+    width: 100%;
     font-size: 15px;
     line-height: 15px;
 }
@@ -35,4 +36,9 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
 }
