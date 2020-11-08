@@ -11,13 +11,17 @@ class SearchTitleForm(forms.Form):
 class CreateNewForm(forms.Form):
     new_title = forms.CharField(
         widget=forms.TextInput(
-            attrs={'id' : 'new-title'}
-            )
-        )
+            attrs={
+                'id' : 'new-title',
+                'class': 'form-control'
+                }))
     content = forms.CharField(
         label="Content: ",
-        widget=forms.Textarea
-        )
+        widget=forms.Textarea(
+            attrs={
+                'id': 'new-content',
+                'class': 'form-control'
+                }))
     
 def match_title(title):
     # Returns True if a complete match

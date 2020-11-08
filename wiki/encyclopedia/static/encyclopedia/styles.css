@@ -34,14 +34,23 @@ h1 {
 }
 
 textarea {
-    height: 50vh;
+    height: 80vh;
     width: 80%;
+    resize: none;
 }
 
 #new-title {
-    width: 80%
+    width: 90%;
 }
 
+#new-content {
+    height: 70vh;
+    width: 90%;
+}
+
+.create-new-field {
+    margin-top: 20px;
+}
 
 
 
