@@ -34,7 +34,15 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
+    height: 50vh;
     width: 80%;
 }
+
+#new-title {
+    width: 80%
+}
+
+
+
+
 

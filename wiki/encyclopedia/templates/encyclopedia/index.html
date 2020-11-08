@@ -7,15 +7,6 @@
 {% block body %}
     <h1>All Pages</h1>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            Title: {{ new_entry_form.new_title }} 
-        </div>
-        <div class="row justify-content-center">
-            Content: {{ new_entry_form.content }}
-        </div>
-    </div>
-
     <ul>
         {% for entry in entries %}
             <li><a href="{% url 'entry' entry %}">{{ entry }}</a></li>

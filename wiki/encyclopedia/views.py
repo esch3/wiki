@@ -9,8 +9,15 @@ class SearchTitleForm(forms.Form):
     title = forms.CharField(label="Search")
 
 class CreateNewForm(forms.Form):
-    new_title = forms.CharField(label="Title: ")
-    content = forms.CharField(label="Content: ", widget=forms.Textarea)
+    new_title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'id' : 'new-title'}
+            )
+        )
+    content = forms.CharField(
+        label="Content: ",
+        widget=forms.Textarea
+        )
     
 def match_title(title):
     # Returns True if a complete match
@@ -61,8 +68,8 @@ def search(request):
         })
 
 def new(request):
-    new_entry= CreateNewForm()
-    return render(request, "encyclopedia/index.html", {
+    new_entry = CreateNewForm()
+    return render(request, "encyclopedia/new.html", {
         "title": "Encyclopedia",
         "form": SearchTitleForm(),
         "new_entry_form": new_entry
