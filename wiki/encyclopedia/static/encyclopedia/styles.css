@@ -52,9 +52,11 @@ textarea {
     margin-top: 20px;
 }
 
-.button-field {
-    width: 95%;
+#btn-create {
+    width: 50%;
 }
+
+
 
 
 
