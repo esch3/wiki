@@ -94,4 +94,7 @@ def save(request):
             f = open('entries/' + title + '.md', 'w+')
             f.write(content)
             f.close()
-    return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('entry', args=[title]))
+        else:
+            return HttpResponse('invalid request')
+            
