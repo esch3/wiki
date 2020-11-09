@@ -84,9 +84,14 @@ def save(request):
     if request.method == "POST":
         form = CreateNewForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data["new_title"] + '.md'
+            title = form.cleaned_data["new_title"]
+            if match_title(title):
+                return render(request, "encyclopedia/error.html", {
+                    "message": str(f"Error: Entry for {title} already exists. Please give another title."),
+                    "form": SearchTitleForm()
+                })
             content = form.cleaned_data["content"]
-            f = open('entries/' + title, 'w+')
+            f = open('entries/' + title + '.md', 'w+')
             f.write(content)
             f.close()
     return HttpResponseRedirect(reverse('index'))
