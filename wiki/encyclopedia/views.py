@@ -22,7 +22,8 @@ class CreateNewForm(forms.Form):
                 'id': 'new-content',
                 'class': 'form-control'
                 }))
-    
+
+# TODO: move this function into utils.py
 def match_title(title):
     # Returns True if a complete match
     if title.lower() in [entry.lower() for entry in util.list_entries()]:
@@ -78,3 +79,14 @@ def new(request):
         "form": SearchTitleForm(),
         "new_entry_form": new_entry
     })
+
+def save(request):
+    if request.method == "POST":
+        form = CreateNewForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["new_title"] + '.md'
+            content = form.cleaned_data["content"]
+            f = open('entries/' + title, 'w+')
+            f.write(content)
+            f.close()
+    return HttpResponseRedirect(reverse('index'))
