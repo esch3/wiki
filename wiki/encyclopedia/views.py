@@ -91,9 +91,7 @@ def save(request):
                     "form": SearchTitleForm()
                 })
             content = form.cleaned_data["content"]
-            f = open('entries/' + title + '.md', 'w+')
-            f.write(content)
-            f.close()
+            util.save_entry(title, content)
             return HttpResponseRedirect(reverse('entry', args=[title]))
         else:
             return HttpResponse('invalid request')
