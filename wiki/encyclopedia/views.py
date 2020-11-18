@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django import forms
 from . import util
+import random
+import markdown2
 
 class SearchTitleForm(forms.Form):
     title = forms.CharField(label="Search")
@@ -39,7 +41,7 @@ def display(request, title):
         })
 
     return render(request, "encyclopedia/display.html", {
-        "entry": util.get_entry(title),
+        "entry": markdown2.markdown(util.get_entry(title)),
         "title": title,
         "form": SearchTitleForm()
     })
@@ -93,7 +95,7 @@ def save(request):
 
 def edit(request, title):
     content = util.get_entry(title)
-    existing_entry = EditForm(initial={
+    existing_entry = CreateNewForm(initial={
         'title': title,
         'content': content
     })
@@ -116,4 +118,7 @@ def update(request):
             pass
     return HttpResponse('invalid request')
 
+def random_page(request):
+    page = random.choice(util.list_entries())
+    return display(request, page)
 
