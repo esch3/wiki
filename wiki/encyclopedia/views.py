@@ -32,13 +32,13 @@ def index(request):
 
 def display(request, title):
     if not util.match_title(title):
-        return render(request, "encyclopedia/index.html", {
+        return render(request, "encyclopedia/display.html", {
             "entry": str(f"{title} not found"),
             "title": "Encyclopedia",
             "form": SearchTitleForm()
         })
 
-    return render(request, "encyclopedia/index.html", {
+    return render(request, "encyclopedia/display.html", {
         "entry": util.get_entry(title),
         "title": title,
         "form": SearchTitleForm()
@@ -67,10 +67,12 @@ def search(request):
 
 def new(request):
     new_entry = CreateNewForm()
+    header = "Create New Page"
     return render(request, "encyclopedia/new.html", {
         "title": "Encyclopedia",
         "form": SearchTitleForm(),
-        "new_entry": new_entry
+        "new_entry": new_entry,
+        "header": header
     })
 
 def save(request):
@@ -89,5 +91,29 @@ def save(request):
         else:
             return HttpResponse('invalid request')
 
-def edit(request):
-    pass
+def edit(request, title):
+    content = util.get_entry(title)
+    existing_entry = EditForm(initial={
+        'title': title,
+        'content': content
+    })
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "form": SearchTitleForm(),
+        "entry": existing_entry, 
+        "header": title
+    })
+    
+def update(request):
+    if request.method == "POST":
+        form = CreateNewForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse('display', args=[title]))
+        else:
+            pass
+    return HttpResponse('invalid request')
+
+

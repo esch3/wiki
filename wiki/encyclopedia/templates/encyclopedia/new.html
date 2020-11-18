@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<h1 class="text-center">Create New Page</h1>
+<h1 class="text-center">{{ header }}</h1>
 <hr/>
     <form class="container" action="{% url 'save' %}" method="POST">
         {% csrf_token %}
@@ -23,8 +23,9 @@
 
             </div>
             <div class="col-10 text-center">
-                <input id="btn-create" class="btn btn-primary btn-lg create-new-field" type="submit" value="Save New Page">
+                <input id="btn-create" class="btn btn-primary btn-lg create-new-field" type="submit" value="Save">
             </div>
         </div>
     </form>
+
 {% endblock %}
