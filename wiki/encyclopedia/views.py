@@ -9,7 +9,7 @@ class SearchTitleForm(forms.Form):
     title = forms.CharField(label="Search")
 
 class CreateNewForm(forms.Form):
-    new_title = forms.CharField(
+    title = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 'id' : 'new-title',
@@ -23,13 +23,6 @@ class CreateNewForm(forms.Form):
                 'class': 'form-control'
                 }))
 
-# TODO: move this function into utils.py
-def match_title(title):
-    # Returns True if a complete match
-    if title.lower() in [entry.lower() for entry in util.list_entries()]:
-        return True
-    return False
-
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
@@ -37,8 +30,8 @@ def index(request):
         "form": SearchTitleForm()
     })
 
-def entry(request, title):
-    if not match_title(title):
+def display(request, title):
+    if not util.match_title(title):
         return render(request, "encyclopedia/index.html", {
             "entry": str(f"{title} not found"),
             "title": "Encyclopedia",
@@ -57,14 +50,14 @@ def search(request):
         title = form.cleaned_data["title"]
         matched_entries = [entry for entry in util.list_entries() if title.lower() in entry.lower()]
         # If query string returns partial matches
-        if not match_title(title) and matched_entries: 
+        if not util.match_title(title) and matched_entries: 
             return render(request, "encyclopedia/index.html", {
                 "entries": matched_entries,
                 "title": "Encyclopedia",
                 "form": SearchTitleForm()
             })
         else:
-            return entry(request, title)
+            return display(request, title)
     else: 
         return render(request, "encyclopedia/index.html", {
             "form": SearchTitleForm(),
@@ -77,22 +70,24 @@ def new(request):
     return render(request, "encyclopedia/new.html", {
         "title": "Encyclopedia",
         "form": SearchTitleForm(),
-        "new_entry_form": new_entry
+        "new_entry": new_entry
     })
 
 def save(request):
     if request.method == "POST":
         form = CreateNewForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data["new_title"]
-            if match_title(title):
+            title = form.cleaned_data["title"]
+            if util.match_title(title):
                 return render(request, "encyclopedia/error.html", {
                     "message": str(f"Error: Entry for {title} already exists. Please give another title."),
                     "form": SearchTitleForm()
                 })
             content = form.cleaned_data["content"]
             util.save_entry(title, content)
-            return HttpResponseRedirect(reverse('entry', args=[title]))
+            return HttpResponseRedirect(reverse('display', args=[title]))
         else:
             return HttpResponse('invalid request')
-            
+
+def edit(request):
+    pass

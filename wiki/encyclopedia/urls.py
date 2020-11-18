@@ -7,5 +7,5 @@ urlpatterns = [
     path("new", views.new, name="new"),
     path("save", views.save, name="save"),
     path("search", views.search, name="search"),
-    path("<str:title>", views.entry, name="entry") 
+    path("<str:title>", views.display, name="display") 
 ]
