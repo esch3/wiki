@@ -6,25 +6,26 @@
 
 {% block body %}
 
-<h1 class="text-center">Create New Page</h1>
+<h1 class="text-center">{{ header }}</h1>
 <hr/>
     <form class="container" action="{% url 'save' %}" method="POST">
         {% csrf_token %}
         <div class="row create-new-field">
             <label for="new_title" class="col-2 text-right">Title: </label>
-            <span class="col-10">{{ new_entry_form.new_title }}</span> 
+            <span class="col-10">{{ new_entry.title }}</span> 
         </div>
         <div class="row create-new-field">
             <label for="content" class="col-2 text-right">Content: </label>
-            <span class="col-10">{{ new_entry_form.content }}</span>
+            <span class="col-10">{{ new_entry.content }}</span>
         </div>
         <div class="row">
             <div class="col-2">
 
             </div>
             <div class="col-10 text-center">
-                <input id="btn-create" class="btn btn-primary btn-lg create-new-field" type="submit" value="Save New Page">
+                <input id="btn-create" class="btn btn-primary btn-lg create-new-field" type="submit" value="Save">
             </div>
         </div>
     </form>
+
 {% endblock %}

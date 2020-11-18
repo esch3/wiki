@@ -4,6 +4,12 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
 
+def match_title(title):
+    # Returns True if a complete match
+    if title.lower() in [entry.lower() for entry in list_entries()]:
+        return True
+    return False
+
 def list_entries():
     """
     Returns a list of all names of encyclopedia entries.
